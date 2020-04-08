@@ -1,0 +1,67 @@
+// For full API documentation, including code examples, visit https://wix.to/94BuAAs
+//Lines 6-37 adapted from https://support.wix.com/en/article/corvid-tutorial-sending-an-email-on-form-submission by Matthew Sconyers
+//Lines 39-61 by Jacob Ballanger
+
+import {sendEmail, sendEmailWithRecipient} from 'backend/email';
+
+$w.onReady(function () {
+  $w("#dataset1").onAfterSave(sendFormData);
+  $w("#submitButton").onClick(sendFormResponse);
+});
+
+function sendFormData() {
+  const subject = `${$w("#inputSub").value}`;
+  const body = `Someone sent you an inquiry! Here's their information and question. 
+    \rName: ${$w("#inputName").value}
+    \rEmail: ${$w("#inputEmail").value}
+    \rMessage: ${$w("#inputMessage").value}`;
+  const recipient = $w("#inputEmail").value;
+ 
+  sendEmail(subject, body)
+    .then(response => console.log(response));
+
+}
+
+function sendFormResponse() {
+  const subject = `Automated Response from English for Life Academy`;
+  const body = `Here is a copy of what you sent. 
+    \rName: ${$w("#inputName").value}
+    \rSubject: ${$w("#inputSub").value}
+    \rEmail: ${$w("#inputEmail").value}
+    \rMessage: ${$w("#inputMessage").value}
+    \r\rThank you for contacting us! A member of our team will reach out to you within 48 hours.`;
+  const recipient = $w("#inputEmail").value;
+
+  sendEmailWithRecipient(subject, body, recipient)
+    .then(response => console.log(response));
+
+ 
+}
+
+export function anchor1_viewportEnter_1(event) {
+	$w("#columnStrip16").show();
+		$w("#text19").show();
+        $w("#horizontalMenu1").show();
+		$w("#image1").show();
+
+		$w("#columnStrip18").hide();
+        $w("#text31").hide();
+        $w("#horizontalMenu2").hide();
+		$w("#image2").hide();
+}
+
+export function anchor1_viewportLeave_1(event) {
+	$w("#columnStrip16").hide();
+		$w("#text19").hide();
+        $w("#horizontalMenu1").hide();
+		$w("#image1").hide();
+
+		$w("#columnStrip18").show();
+        $w("#text31").show();
+        $w("#horizontalMenu2").show();
+		$w("#image2").show(); 
+}
+
+ <meta Key="English as a Second Language" another_key="English Class"/>
+
+// meta tags are a work-in-progress
